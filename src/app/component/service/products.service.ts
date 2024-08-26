@@ -1,9 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { fakeApi } from '../../app.config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
-
-  constructor() { }
+  constructor(public http: HttpClient) {}
+  getProducts() {
+    return this.http.get(fakeApi + '/products');
+  }
+  getCategories() {
+    return this.http.get(fakeApi + '/products/categories');
+  }
 }
