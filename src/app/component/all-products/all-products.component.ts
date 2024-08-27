@@ -1,6 +1,7 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../service/products.service';
+import { CartService } from '../service/cart.service';
 
 @Component({
   selector: 'app-all-products',
@@ -14,7 +15,7 @@ export class AllProductsComponent implements OnInit {
   products: any = [];
   showButtons: boolean[] = [];
 
-  constructor(private service: ProductsService) {}
+  constructor(private service: ProductsService, private cart: CartService) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -27,8 +28,9 @@ export class AllProductsComponent implements OnInit {
     });
   }
 
-  doThis() {
-    console.log(this.products);
+  addToCart(prod: any) {
+    this.cart.addToCart(prod);
+    console.log('cart is', this.cart.cart);
   }
 
   toggleButton(index: number, state: boolean) {
