@@ -10,6 +10,7 @@ import { CartService } from '../service/cart.service';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
+  quantity: number[] = [];
   products: any[] = [];
   constructor(private cart: CartService) {}
   ngOnInit(): void {
@@ -17,5 +18,10 @@ export class CartComponent implements OnInit {
   }
   getCartItem() {
     this.products = this.cart.cart;
+    this.quantity = new Array(this.products.length).fill(1);
+  }
+  updateQuantity(event: Event, i: number) {
+    const inputElement = event.target as HTMLInputElement;
+    this.quantity[i] = parseInt(inputElement.value, 10);
   }
 }
