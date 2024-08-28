@@ -2,6 +2,7 @@ import { NgClass, NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../service/products.service';
 import { CartService } from '../service/cart.service';
+import { FavouriteService } from '../service/favourite.service';
 
 @Component({
   selector: 'app-all-products',
@@ -15,7 +16,11 @@ export class AllProductsComponent implements OnInit {
   products: any = [];
   showButtons: boolean[] = [];
 
-  constructor(private service: ProductsService, private cart: CartService) {}
+  constructor(
+    private service: ProductsService,
+    private cart: CartService,
+    private favourite: FavouriteService
+  ) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -30,7 +35,10 @@ export class AllProductsComponent implements OnInit {
 
   addToCart(prod: any) {
     this.cart.addToCart(prod);
-    console.log('cart is', this.cart.cart);
+  }
+  addToFav(prod: any) {
+    this.favourite.addToFav(prod);
+    console.log('favlist', this.favourite.favourite);
   }
 
   toggleButton(index: number, state: boolean) {
