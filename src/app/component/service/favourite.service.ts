@@ -15,6 +15,11 @@ export class FavouriteService {
     this.saveFav();
   }
 
+  deleteFav(index: number) {
+    this.favourite = this.favourite.filter((task, i) => i != index);
+    this.saveFav();
+  }
+
   saveFav() {
     localStorage.setItem('favourite', JSON.stringify(this.favourite));
   }
