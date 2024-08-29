@@ -29,7 +29,10 @@ export class CartService {
       this.cart = JSON.parse(savedCart);
     }
   }
-
+  deleteProd(index: number) {
+    this.cart = this.cart.filter((item, i) => i != index);
+    this.saveCart();
+  }
   clearCart() {
     this.cart = [];
     this.saveCart();
