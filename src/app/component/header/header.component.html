@@ -4,36 +4,55 @@
       Exclusive
     </div>
 
-    <button class="md:hidden text-black text-2xl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="md:hidden absolute top-6 right-10 z-30 text-black text-2xl" type="button" (click)="toggleNavbar()">
       <i class="bi bi-list"></i>
     </button>
 
-    <nav id="navbarNav" class=" md:flex md:items-center space-x-6 text-sm">
-      <a routerLink="" class="text-black transition-all ease-linear duration-500 no-underline relative
-               before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0
-               before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+    <nav id="navbarNav"
+      class="md:flex  max-md:absolute max-md:bg-white max-md:shadow-md max-md:w-44 max-md:p-3 max-md:top-14 z-20 right-10 max-md:flex-col md:items-center  md:space-x-6 text-sm"
+      [ngClass]="{'hidden': !isNavbarOpen, 'block': isNavbarOpen, 'md:flex':true}">
+      <a routerLink=""
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
         Home
       </a>
-      <a routerLink="contact" class="text-black transition-all ease-linear duration-500 no-underline relative
-               before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0
-               before:left-0 before:transition-all before:duration-300 hover:before:w-full">Contact</a>
-      <a routerLink="about" class="text-black transition-all ease-linear duration-500 no-underline relative
-               before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0
-               before:left-0 before:transition-all before:duration-300 hover:before:w-full">About</a>
-      <a routerLink="d" class="text-black transition-all ease-linear duration-500 no-underline relative
-               before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0
-               before:left-0 before:transition-all before:duration-300 hover:before:w-full">Sign Up</a>
+      <a routerLink="contact"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Contact
+      </a>
+      <a routerLink="about"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        About
+      </a>
+      @if (!getMe) {
+      <a routerLink="signup"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Sign Up
+      </a>
+      }
+      <a routerLink="cart"
+        class="text-black md:hidden max-md:block  max-md:text-xl transition-all max-md:mb-2 ease-linear duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        cart
+      </a>
+      <a routerLink="wishlist"
+        class="text-black md:hidden max-md:block  max-md:text-xl transition-all max-md:mb-2 ease-linear duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Wishlist
+      </a>
     </nav>
-    <div class=" md:flex items-center space-x-4">
+
+    <div class="flex items-center space-x-4 max-md:hidden ">
       <div class="relative">
         <input type="text" placeholder="What are you looking for?"
-          class="border border-gray-300 rounded-full pl-4 pr-10 py-2 text-sm w-64">
+          class="border border-gray-300 rounded-full pl-4 pr-10 py-2 text-sm w-64" />
         <button class="absolute top-0 right-0 h-full px-4">
           <i class="bi bi-search"></i>
         </button>
       </div>
-      <a routerLink="wishlist" class="text-xl text-black"><i class="bi bi-heart"></i></a>
-      <a routerLink="cart" class="text-xl text-black"><i class="bi bi-cart"></i></a>
+      <a routerLink="wishlist" class="text-xl text-black">
+        <i class="bi bi-heart"></i>
+      </a>
+      <a routerLink="cart" class="text-xl text-black">
+        <i class="bi bi-cart"></i>
+      </a>
     </div>
   </div>
 </header>

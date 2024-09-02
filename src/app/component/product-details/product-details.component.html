@@ -1,1 +1,22 @@
-<p>product-details works!</p>
+@if (product) {
+<div class="flex flex-wrap my-5 gap-10 items-center">
+  <div class="bg-gray-200 rounded-lg shadow-md w-1/2">
+    <img src={{product?.image}} alt={{product?.title}} class="md:w-2/3 mx-auto">
+  </div>
+  <div class="md:w-1/3">
+    <h2>{{product?.title}}</h2>
+    <p>{{product?.description}}</p>
+    <p class="text-xl font-bold text-green-500">{{product?.price |currency}}</p>
+
+    <div>
+      <igc-rating [value]="product?.rating?.rate" min="1" max="5" class="text-yellow-500"></igc-rating>
+    </div>
+    <button class="bg-red-600 text-white w-36 h-10 font-bold mt-3" (click)="addToCart(product)">Add to cart</button>
+
+  </div>
+</div>
+}@else {
+<div class="flex justify-center items-center h-48">
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 block"></div>
+</div>
+}
