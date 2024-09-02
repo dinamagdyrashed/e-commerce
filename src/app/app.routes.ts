@@ -5,6 +5,9 @@ import { AboutComponent } from './component/about/about.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { CartComponent } from './component/cart/cart.component';
 import { WishlistComponent } from './component/wishlist/wishlist.component';
+import { ProductDetailsComponent } from './component/product-details/product-details.component';
+import { LoginComponent } from './component/login/login.component';
+import { SignupComponent } from './component/signup/signup.component';
 
 export const routes: Routes = [
   {
@@ -20,12 +23,24 @@ export const routes: Routes = [
     component: AboutComponent,
   },
   {
+    path: 'signup',
+    component: SignupComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: 'cart',
     component: CartComponent,
   },
   {
     path: 'wishlist',
     component: WishlistComponent,
+  },
+  {
+    path: 'product/:id',
+    component: ProductDetailsComponent,
   },
   {
     path: '**',

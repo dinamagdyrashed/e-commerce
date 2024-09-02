@@ -1,0 +1,73 @@
+<div class="flex justify-center items-center h-screen">
+  <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden w-3/4 max-w-4xl">
+    <div class="md:w-1/2">
+      <img src="../../../assets/images/phone.jpeg" alt="Shopping Cart and Phone" class="h-full w-full object-cover" />
+    </div>
+
+    <div class="md:w-1/2 p-8">
+      <h2 class="text-3xl font-semibold mb-4">Sign Up to Exclusive</h2>
+      <p class="text-gray-600 mb-8">Enter your details below</p>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="text" required id="email" formControlName="email"
+            class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+          @if (email?.errors?.['required'] && email?.touched) {
+          <p class="text-red-500 text-sm mt-2">Email
+            is required</p>
+          }
+          @if (email?.errors?.['email'] && email?.touched) {
+          <p class="text-red-500 text-sm mt-2">Enter a valid email
+            address</p>
+          }
+
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" required id="password" formControlName="password"
+            class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+          @if (password?.errors?.['required'] && password?.touched) {<p class="text-red-500 text-sm mt-2">Password is
+            required</p>}
+
+          @if (password?.errors?.['minlength'] && password?.touched) {
+          <p class="text-red-500 text-sm mt-2">Password must be
+            at least 6 characters long</p>
+          }
+
+        </div>
+
+        <div class="mb-4">
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input type="password" id="confirmPassword" formControlName="confirmPassword"
+            class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+          @if (confirmPassword?.errors?.['required'] && confirmPassword?.touched) {
+          <p class="text-red-500 text-sm mt-2">
+            Confirm Password is required</p>
+          }
+
+          @if (signupForm.errors?.['passwordsMismatch'] && confirmPassword?.touched) {
+          <p class="text-red-500 text-sm mt-2">
+            Passwords must match</p>
+          }
+
+        </div>
+
+        <div class="flex justify-between items-center">
+          <button type="submit" [disabled]="!signupForm.valid"
+            class="bg-red-500 text-white md:py-2 md:px-4 max-sm:py-1 max-sm:px-1 rounded-md hover:bg-red-600"
+            [ngClass]="{'bg-slate-400': !signupForm.valid, 'bg-red-500': signupForm.valid}" routerLink="/">Sign
+            Up</button>
+        </div>
+
+        <div class="text-center flex mt-4 gap-2">
+          <p class="text-gray-600">Already have an account?</p>
+          <a routerLink="/login" class="text-green-600  rounded-md hover:text-red-500 ">
+            Log In
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

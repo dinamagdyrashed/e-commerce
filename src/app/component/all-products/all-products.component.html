@@ -1,23 +1,27 @@
 <div class="mt-20">
   <p class="text-red-500 font-extrabold border-l-8 border-red-500 pl-2">Our Products</p>
   <h2>Explore Our Products</h2>
-  <div class="flex flex-wrap gap-8 mx-auto mt-3">
+  @if (products.length>0) {
+  <div class="flex flex-wrap justify-center items-center gap-8 mx-auto mt-3">
 
     @for (prod of products; track $index ) {
     <div class="w-72">
       <div (mouseenter)="toggleButton($index, true)" (mouseleave)="toggleButton($index, false)"
         class="bg-gray-200 w-72 h-64 relative flex justify-center items-center rounded-lg overflow-hidden">
         <img [src]="prod.image" class="w-2/3 mb-3" alt="">
-        <button class="bg-white w-10 rounded-full right-1 absolute top-3  p-2 text-white z-10" (click)="addToFav(prod)">
-          <i class="bi bi-heart w-full text-black text-lg"></i>
+        <button class="bg-white w-10 rounded-full right-1 absolute top-3  p-2 text-white z-10"
+          (click)="addToFav(prod,$index)">
+          <i class="bi bi-heart w-full overflow-hidden  text-lg"
+            [ngClass]="isFav[$index]?'text-red-500':'text-black bg-white'"></i>
         </button>
-        <button class="bg-white w-10 rounded-full right-1 absolute top-16 p-2 text-white z-10">
+        <button class="bg-white w-10 rounded-full right-1 absolute top-16 p-2 text-white z-10"
+          [routerLink]="['/product', prod.id]">
           <i class="bi bi-eye w-full text-black text-xl"></i>
         </button>
         <button class="bg-black absolute bottom-0 transition-all duration-300 w-72 h-10 text-white" [ngStyle]="{
-                  'opacity': showButtons[$index] ? '1' : '0',
-                  'transform': showButtons[$index] ? 'translateY(0)' : 'translateY(100%)'
-                }" (click)="addToCart(prod)">
+                      'opacity': showButtons[$index] ? '1' : '0',
+                      'transform': showButtons[$index] ? 'translateY(0)' : 'translateY(100%)'
+                    }" (click)="addToCart(prod)">
           Add To Cart
         </button>
       </div>
@@ -26,4 +30,10 @@
     </div>
     }
   </div>
+  }
+  @else {
+  <div class="flex justify-center items-center h-48">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 block"></div>
+  </div>
+  }
 </div>

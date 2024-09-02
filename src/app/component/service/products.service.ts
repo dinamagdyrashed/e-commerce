@@ -6,11 +6,37 @@ import { fakeApi } from '../../app.config';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor(public http: HttpClient) {}
+  getMe: boolean = false;
+
+  constructor(public http: HttpClient) {
+    this.loadState();
+  }
+
+  loadState() {
+    const savedGetMe = localStorage.getItem('getMe');
+    if (savedGetMe) {
+      this.getMe = JSON.parse(savedGetMe);
+    }
+  }
+
+  saveState() {
+    localStorage.setItem('getMe', JSON.stringify(this.getMe));
+  }
+
+  updateState(value: boolean) {
+    this.getMe = value;
+    this.saveState();
+  }
+
   getProducts() {
     return this.http.get(fakeApi + '/products');
   }
+
   getCategories() {
     return this.http.get(fakeApi + '/products/categories');
+  }
+
+  getSpecificProducts(id: number) {
+    return this.http.get(fakeApi + '/products/' + id);
   }
 }
