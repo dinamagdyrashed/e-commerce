@@ -8,32 +8,38 @@
       <h2 class="text-3xl font-semibold mb-4">Sign Up to Exclusive</h2>
       <p class="text-gray-600 mb-8">Enter your details below</p>
 
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm)">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" required id="name" formControlName="name"
+            class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+
+          @if(signupForm.get('name')?.errors!==null&&signupForm.get('name')?.touched){
+          @if(signupForm.get('name')?.errors?.['required']){<p class="text-red-500 text-sm mt-2">Name Required</p>}
+          @if(signupForm.get('name')?.errors?.['minlength']||signupForm.get('name')?.errors?.['maxlength'])
+          {<p class="text-red-500 text-sm mt-2">length between 2,50</p>}
+          }
+        </div>
+
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
           <input type="text" required id="email" formControlName="email"
             class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
-          @if (email?.errors?.['required'] && email?.touched) {
-          <p class="text-red-500 text-sm mt-2">Email
-            is required</p>
+          @if(signupForm.get('email')?.errors!==null&&signupForm.get('email')?.touched){
+          @if(signupForm.get('email')?.errors?.['required']){<p class="text-red-500 text-sm mt-2">email Required</p>}
+          @if(signupForm.get('email')?.errors?.['email']){<p class="text-red-500 text-sm mt-2">invalid email</p>}
           }
-          @if (email?.errors?.['email'] && email?.touched) {
-          <p class="text-red-500 text-sm mt-2">Enter a valid email
-            address</p>
-          }
-
         </div>
 
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
           <input type="password" required id="password" formControlName="password"
             class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
-          @if (password?.errors?.['required'] && password?.touched) {<p class="text-red-500 text-sm mt-2">Password is
-            required</p>}
-
-          @if (password?.errors?.['minlength'] && password?.touched) {
-          <p class="text-red-500 text-sm mt-2">Password must be
-            at least 6 characters long</p>
+          @if(signupForm.get('password')?.errors!==null&&signupForm.get('password')?.touched){
+          @if(signupForm.get('password')?.errors?.['required']){<p class="text-red-500 text-sm mt-2">password Required
+          </p>}
+          @if(signupForm.get('password')?.errors?.['minlength']||signupForm.get('password')?.errors?.['maxlength'])
+          {<p class="text-red-500 text-sm mt-2">password length 6,20</p>}
           }
 
         </div>
@@ -42,14 +48,14 @@
           <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
           <input type="password" id="confirmPassword" formControlName="confirmPassword"
             class="mt-1 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
-          @if (confirmPassword?.errors?.['required'] && confirmPassword?.touched) {
-          <p class="text-red-500 text-sm mt-2">
-            Confirm Password is required</p>
+          @if(signupForm.get('confirmPassword')?.errors!==null&&signupForm.get('confirmPassword')?.touched){
+          @if(signupForm.get('confirmPassword')?.errors?.['required']){<p class="text-red-500 text-sm mt-2">confirm
+            Password Required</p>}
+          @if(signupForm.get('confirmPassword')?.errors?.['minlength']||signupForm.get('confirmPassword')?.errors?.['maxlength'])
+          {<p class="text-red-500 text-sm mt-2">confirm password length 6,20</p>}
           }
-
-          @if (signupForm.errors?.['passwordsMismatch'] && confirmPassword?.touched) {
-          <p class="text-red-500 text-sm mt-2">
-            Passwords must match</p>
+          @if(passwordErrors!==''){
+          <p class="text-red-500 text-sm mt-2">{{passwordErrors}}</p>
           }
 
         </div>
@@ -57,7 +63,7 @@
         <div class="flex justify-between items-center">
           <button type="submit" [disabled]="!signupForm.valid"
             class="bg-red-500 text-white md:py-2 md:px-4 max-sm:py-1 max-sm:px-1 rounded-md hover:bg-red-600"
-            [ngClass]="{'bg-slate-400': !signupForm.valid, 'bg-red-500': signupForm.valid}" routerLink="/">Sign
+            [ngClass]="{'bg-slate-400': !signupForm.valid, 'bg-red-500': signupForm.valid}" type="submit">Sign
             Up</button>
         </div>
 

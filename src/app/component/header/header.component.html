@@ -23,12 +23,18 @@
         class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
         About
       </a>
-      @if (!getMe) {
-      <a routerLink="signup"
+
+      @if (isLogin) {
+      <a routerLink="myOrders"
         class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
-        Sign Up
+        Orders
+      </a>
+      <a routerLink="signup" (click)="logout()"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Logout
       </a>
       }
+
       <a routerLink="cart"
         class="text-black md:hidden max-md:block  max-md:text-xl transition-all max-md:mb-2 ease-linear duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
         cart
@@ -47,12 +53,25 @@
           <i class="bi bi-search"></i>
         </button>
       </div>
+
+      @if (isLogin) {
       <a routerLink="wishlist" class="text-xl text-black">
         <i class="bi bi-heart"></i>
       </a>
       <a routerLink="cart" class="text-xl text-black">
         <i class="bi bi-cart"></i>
       </a>
+      }@else {
+      <a routerLink="signup"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Sign Up
+      </a>
+      <a routerLink="login"
+        class="text-black max-md:block transition-all ease-linear max-md:text-xl max-md:mb-2 duration-500 no-underline relative before:content-[''] before:absolute before:w-0 before:h-0.5 before:bg-black before:bottom-0 before:left-0 before:transition-all before:duration-300 hover:before:w-full">
+        Login
+      </a>
+      }
+
     </div>
   </div>
 </header>

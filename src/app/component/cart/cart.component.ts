@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../service/cart.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GlobalService } from '../service/global.service';
+import { AuthService } from '../service/auth.service';
+import { OrdersService } from '../service/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,36 +14,83 @@ import { CartService } from '../service/cart.service';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
-  quantity: number[] = [];
-  products: any[] = [];
-  subtotal: number = 0; // إضافة متغير للمجموع الفرعي
+  subscription: any;
+  cart: any = {};
+  productsLength: number = 0;
+  productImage: string = '';
+  taxPrice: number = 100;
+  couponError: string = '';
+  loading: boolean = false;
+  isModalVisible: boolean = false;
 
-  constructor(private cart: CartService) {}
+  couponForm = new FormGroup({
+    name: new FormControl(null, [Validators.required]),
+  });
+  constructor(
+    private _AuthService: AuthService,
+    private _GlobalService: GlobalService,
+    private _cartService: CartService,
+    private _OrdersService: OrdersService,
+    private _Router: Router
+  ) {}
+
+  loadCart() {
+    this.subscription = this._cartService.getUserCart().subscribe({
+      next: (res) => {
+        this.cart = res.data;
+        this.productsLength = res.length;
+      },
+      error: (err) => {},
+    });
+    console.log('cart', this.cart.cartItems);
+  }
+
+  removeItem(itemId: string) {
+    this.loading = true;
+    this._cartService.removeProductFromCart(itemId).subscribe({
+      next: (res) => {
+        this.loadCart();
+        this.loading = false;
+      },
+      error: (err) => {},
+    });
+  }
+  openModal() {
+    this.isModalVisible = true;
+  }
+  closeModal() {
+    this.isModalVisible = false;
+  }
+  clearCart() {
+    this.isModalVisible = false;
+    this.loading = true;
+    this._cartService.clearCart().subscribe({
+      next: (res) => {
+        this.loading = false;
+        this._Router.navigate(['/']);
+      },
+      error: (err) => {},
+    });
+  }
+
+  createOrder() {
+    this._OrdersService.createOrder().subscribe({
+      next: (res) => {
+        alert('order created');
+        this._Router.navigate(['/myOrders']);
+      },
+      error: (err) => {},
+    });
+  }
 
   ngOnInit(): void {
-    this.getCartItem();
+    this._AuthService.checkToken();
+    this.productImage = this._GlobalService.productsImages;
+    this.loadCart();
+    console.log('user', this._AuthService.currentUser);
   }
 
-  getCartItem() {
-    this.products = this.cart.cart;
-    this.quantity = new Array(this.products.length).fill(1);
-    this.calculateSubtotal();
-  }
-
-  deleteProd(i: number) {
-    this.cart.deleteProd(i);
-    this.getCartItem();
-  }
-
-  updateQuantity(event: Event, i: number) {
-    const inputElement = event.target as HTMLInputElement;
-    this.quantity[i] = parseInt(inputElement.value, 10);
-    this.calculateSubtotal();
-  }
-
-  calculateSubtotal() {
-    this.subtotal = this.products.reduce((acc, prod, index) => {
-      return acc + prod.price * this.quantity[index];
-    }, 0);
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -8,6 +8,7 @@ import { WishlistComponent } from './component/wishlist/wishlist.component';
 import { ProductDetailsComponent } from './component/product-details/product-details.component';
 import { LoginComponent } from './component/login/login.component';
 import { SignupComponent } from './component/signup/signup.component';
+import { OrdersComponent } from './component/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,10 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     component: ProductDetailsComponent,
+  },
+  {
+    path: 'myOrders',
+    component: OrdersComponent,
   },
   {
     path: '**',
