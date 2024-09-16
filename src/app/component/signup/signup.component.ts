@@ -4,11 +4,13 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { passwordMatchValidator } from '../validators/password-match.validator';
 import { NgClass } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { ProductsService } from '../service/products.service';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,38 +20,45 @@ import { ProductsService } from '../service/products.service';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
-  signupForm: FormGroup;
+  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  signupForm = new FormGroup({
+    name: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(50),
+    ]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20),
+    ]),
+    confirmPassword: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20),
+    ]),
+  });
 
-  constructor(
-    private fb: FormBuilder,
-    private productsService: ProductsService
-  ) {
-    this.signupForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required],
+  emailErrors: string = '';
+  passwordErrors: string = '';
+  phoneImage: string = '';
+
+  signup(formData: FormGroup) {
+    this._AuthService.singUp(formData.value).subscribe({
+      next: (res) => {
+        if (res.token) {
+          localStorage.setItem('user', res.token);
+          this._AuthService.saveCurrentUser();
+        }
+        this._Router.navigate(['/']);
       },
-      { validators: passwordMatchValidator() }
-    );
-  }
-
-  onSubmit() {
-    if (this.signupForm.valid) {
-      console.log('Form Submitted!', this.signupForm.value);
-      this.productsService.updateState(true); // تحديث حالة getMe إلى true
-    }
-  }
-
-  get email() {
-    return this.signupForm.get('email');
-  }
-
-  get password() {
-    return this.signupForm.get('password');
-  }
-
-  get confirmPassword() {
-    return this.signupForm.get('confirmPassword');
+      error: (err) => {
+        err.error.errors.map((error: any) => {
+          if (error.path === 'email') this.emailErrors = error.msg;
+          if (error.path === 'password') this.passwordErrors = error.msg;
+        });
+      },
+    });
   }
 }

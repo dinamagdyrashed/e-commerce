@@ -11,7 +11,7 @@
     <div>
       <igc-rating [value]="product?.rating?.rate" min="1" max="5" class="text-yellow-500"></igc-rating>
     </div>
-    <button class="bg-red-600 text-white w-36 h-10 font-bold mt-3" (click)="addToCart(product)">Add to cart</button>
+    <button class="bg-red-600 text-white w-36 h-10 font-bold mt-3" (click)="addToCart(product._id)">Add to cart</button>
 
   </div>
 </div>

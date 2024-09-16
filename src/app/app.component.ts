@@ -5,6 +5,11 @@ import { HeaderComponent } from './component/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './component/footer/footer.component';
 import { ProductsService } from './component/service/products.service';
+import { AuthService } from './component/service/auth.service';
+import { GlobalService } from './component/service/global.service';
+import { CartService } from './component/service/cart.service';
+import { OrdersService } from './component/service/order.service';
+import { WishlistService } from './component/service/wishlist.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +23,14 @@ import { ProductsService } from './component/service/products.service';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [ProductsService],
+  providers: [
+    ProductsService,
+    AuthService,
+    GlobalService,
+    CartService,
+    OrdersService,
+    WishlistService,
+  ],
 })
 export class AppComponent {
   title = 'e-commerce';
